@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--log4j基本配置-->
+<!DOCTYPE log4j:configuration SYSTEM "/WEB-inf/resources/dtd/log4j/log4j.dtd"> 
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="myapp.console.log" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMax" value="DEBUG" />
+		</filter>
+	</appender>
+	<appender name="myapp.file.log" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${webApp.root}/WEB-INF/logs/logs.log " />
+		<param name="Append" value="false" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %p - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="IBatis" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMax" value="DEBUG" />
+		</filter>
+	</appender>
+
+
+
+<!--	<appender name="console" class="org.apache.log4j.ConsoleAppender">-->
+<!--		<param name="Target" value="System.out" />-->
+<!--		<param name="Threshold" value="info" />-->
+<!--		<layout class="org.apache.log4j.PatternLayout">-->
+<!--			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p: %m%n" />-->
+<!--		</layout>-->
+<!--	</appender>-->
+<!--
+	<appender name="IBatis" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-4r [%t] %-5p %c %x - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMax" value="DEBUG" />
+		</filter>
+	</appender>
+
+	<logger name="com.ibatis" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="java.sql.Connection" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="java.sql.Statement" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="java.sql.PreparedStatement" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="IBatis" />
+	</logger>
+
+	<logger name="java.sql.ResultSet" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="IBatis" />
+	</logger>
+
+	 <logger name="org.hibernate"> <level value="debug" /> <appender-ref 
+		ref="myapp.console.log" /> </logger> <logger name="com.googlecode.jsonplugin"> 
+		<level value="debug" /> <appender-ref ref="myapp.console.log" /> </logger> 
+
+	<logger name="com.jy">
+		<level value="debug" />
+		<appender-ref ref="myapp.file.log" />
+	</logger>-->
+
+	<logger name="java.sql.Connection" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="java.sql.Statement" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="IBatis" />
+	</logger>
+
+	<logger name="java.sql.PreparedStatement" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="IBatis" />
+	</logger>
+
+	<logger name="java.sql.ResultSet" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="IBatis" />
+	</logger>
+
+	<logger name="com.ibatis" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	
+	<root>
+		<level value="debug" />
+		<appender-ref ref="myapp.console.log" />
+		<appender-ref ref="myapp.file.log" />
+	</root>
+</log4j:configuration>

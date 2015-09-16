@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:flow="http://www.springframework.org/schema/webflow-config"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+ 	   xmlns:mvc="http://www.springframework.org/schema/mvc" 
+ 	   
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       	  http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+          http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+          http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.0.xsd
+          http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+          
+<!--########################################    导入其他spring配置文件清单               ########################################-->        
+    
+<!--导入控制器的配置文件-->
+<!-- <import resource="appBeans/controllers.xml" /> -->
+    
+<!--########################################    导入其他spring配置文件清单结束        ########################################-->     
+    
+    
+    
+<!--########################################            spring基本配置                      ########################################-->
+
+	<!-- 启动注解 -->
+	<context:component-scan base-package="com.isatk.model.dao" />
+	<context:component-scan base-package="com.isatk.dao.question" />
+    <context:component-scan base-package="com.isatk.service" />
+	<context:property-placeholder location="classpath*:boot/dbconnection.properties"/><!-- 可在注解中使用 -->
+  
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">   
+           	<property name="driverClassName" value="${DS.DRIVER_CLASS_NAME}" /> 
+           	<property name="url" value="${DS.URL}" />         
+	        <property name="username" value="${DS.USER_NAME}" />  
+	        <property name="password" value="${DS.PASS_WORD}" />
+	        <property name="initialSize" value="5" />  
+	        <property name="maxActive" value="20" />  
+	        <property name="maxWait" value="60000" />  
+	        <!-- <property name="validationQuery" value="select count(*) AS C from SYS_VALIDATION" />   --> 
+	        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    		<property name="minEvictableIdleTimeMillis" value="300000" />    
+    		<property value="true" name="testWhileIdle"></property>
+		    <property value="false" name="testOnBorrow"></property>
+		    <property value="false" name="testOnReturn"></property>
+		    <property value="true" name="poolPreparedStatements"></property>
+		    <property value="20" name="maxPoolPreparedStatementPerConnectionSize"></property>            
+    </bean> 
+
+	<!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <property name="dataSource" ref="dataSource" />          
+    </bean>
+   
+    <!-- 事务机制设置 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+          <tx:attributes>
+          	   <tx:method name="audit*" rollback-for="Exception" />
+               <tx:method name="approve*" rollback-for="Exception" /> 
+               <tx:method name="add*" rollback-for="Exception" />
+               <tx:method name="assign*" rollback-for="Exception" />
+               <tx:method name="build*" rollback-for="Exception" />
+               <tx:method name="create*" rollback-for="Exception" />
+               <tx:method name="del*" rollback-for="Exception" />
+               <tx:method name="do*" rollback-for="Exception" />
+               <tx:method name="exec*" rollback-for="Exception" />
+               <tx:method name="gen*" rollback-for="Exception" />
+               <tx:method name="gain*" rollback-for="Exception" />
+               <tx:method name="insert*" rollback-for="Exception" />
+               <tx:method name="modify*" rollback-for="Exception" />
+               <tx:method name="process*" rollback-for="Exception" />
+               <tx:method name="push*" rollback-for="Exception" />
+               <tx:method name="re*" rollback-for="Exception" />
+               <tx:method name="save*" rollback-for="Exception" />
+               <tx:method name="send*" rollback-for="Exception" />               
+               <tx:method name="submit*" rollback-for="Exception" />               
+               <tx:method name="up*" rollback-for="Exception" />              
+               <tx:method name="vote*" rollback-for="Exception" />                                        
+               <tx:method name="free*" rollback-for="Exception" propagation="NOT_SUPPORTED"/>
+               <tx:method name="alone*" rollback-for="Exception" propagation="REQUIRES_NEW"/>             
+               <tx:method name="*" read-only="true" rollback-for="Exception" />
+          </tx:attributes>
+    </tx:advice>
+	
+	<!-- 事务AOP -->
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="serviceOperation" expression="execution(* com.isatk.service..*.*(..))" />
+        <aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice" />
+    </aop:config>
+    
+<!-- ########################################    基本配置结束            ######################################## -->
+    
+
+<!--########################################    mybatis整合配置              ######################################## -->
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />  
+        <property name="mapperLocations" >
+        	<list>
+                <value>classpath*:com/isatk/model/sql/**/*.xml</value>
+                <value>classpath*:com/isatk/entity/sqlmapper/*.xml</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- mybatis xmlmaper list的配置方式
+      <bean id="smisSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:config/mybatis-config.xml"></property>
+        <property name="dataSource" ref="smisDataSource"/>
+                指定配置文件方式
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+            <value>classpath:com/cosbulk/smis/dao/mapper/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>    
+     -->
+    
+    <!--配置需要注入的mybatis session-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <!--可以批量执行的设置,有此设置表示开启批量-->
+        <constructor-arg index="1" value="BATCH" />
+    </bean>
+    
+    <!-- 注入接口实例的配置 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+	    <property name="basePackage" value="com.isatk.model.dao,com.isatk.dao"/> 
+	    <!-- 
+	    <property name="markerInterface" value="com.isatk.model.dao.base.BaseMapper"/> 
+	    -->
+    </bean>
+    
+<!-- ########################################    mybatis整合配置结束            ######################################## -->
+    
+<!-- ########################################    spring国际化      ################################################# -->
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">  
+        <!-- 国际化信息所在的文件名,多文件做法 -->
+        <property name="basenames">    
+            <list>  
+                <value>contents</value>  
+            </list>    
+        </property>  
+          
+        <!-- 
+        	国际化信息所在的文件名
+        	这个是配置单一路径的做法
+        <property name="basename">  
+            <value>messages</value>  
+        </property>  
+        	如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称
+        <property name="useCodeAsDefaultMessage" value="true" />  
+         -->          
+        <property name="defaultEncoding" value="UTF-8" />  
+    </bean>  
+      
+    <bean id="springUtil" class="com.isatk.core.driver.SpringUtil" />
+   
+   
+</beans>

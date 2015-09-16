@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="block_test" language="groovy" pageWidth="683" pageHeight="264" columnWidth="683" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="caf5d277-0cfc-4c92-8904-4be2d1f46398">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="invoice_id" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\lixiang\\Desktop\\ISATK3\\WebRoot\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+		fi.*,
+		sps.`name` sps_name,
+		spf.`name` spf_name,
+		bcs.`name` bcs_name,
+		bcs.phone bcs_phone,
+		bcf.`name` bcf_name,
+		bcf.phone bcf_phone
+	FROM
+		fa_invoice fi,
+		sys_point sps,
+		sys_point spf,
+		bas_clientele bcs,
+		bas_clientele bcf
+	where
+		fi.fa_point = spf.id
+		AND fi.so_point = sps.id
+		AND fi.fa_clientele = bcf.id
+		AND fi.so_clientele = bcs.id
+ 		and  fi.id=$P{invoice_id}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fa_no" class="java.lang.String">
+		<fieldDescription><![CDATA[发货单号]]></fieldDescription>
+	</field>
+	<field name="fa_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[发货时间]]></fieldDescription>
+	</field>
+	<field name="fa_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[发货电话]]></fieldDescription>
+	</field>
+	<field name="fa_point" class="java.lang.Long">
+		<fieldDescription><![CDATA[发货点]]></fieldDescription>
+	</field>
+	<field name="fa_clientele" class="java.lang.Long">
+		<fieldDescription><![CDATA[发货人]]></fieldDescription>
+	</field>
+	<field name="so_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[收货电话]]></fieldDescription>
+	</field>
+	<field name="so_clientele" class="java.lang.Long">
+		<fieldDescription><![CDATA[收货人]]></fieldDescription>
+	</field>
+	<field name="so_point" class="java.lang.Long">
+		<fieldDescription><![CDATA[收货点]]></fieldDescription>
+	</field>
+	<field name="freight" class="java.lang.Integer">
+		<fieldDescription><![CDATA[运费]]></fieldDescription>
+	</field>
+	<field name="collection" class="java.lang.Integer">
+		<fieldDescription><![CDATA[代收费]]></fieldDescription>
+	</field>
+	<field name="ins_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[录入时间]]></fieldDescription>
+	</field>
+	<field name="up_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[修改时间]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[状态(0.发货中；1.已经收货；2.代收支付确认；3.代收支付完成)]]></fieldDescription>
+	</field>
+	<field name="count_insurance" class="java.lang.Integer">
+		<fieldDescription><![CDATA[合计保险费]]></fieldDescription>
+	</field>
+	<field name="fee" class="java.lang.Integer">
+		<fieldDescription><![CDATA[手续费]]></fieldDescription>
+	</field>
+	<field name="freight_way" class="java.lang.Integer">
+		<fieldDescription><![CDATA[运费-付款方式]]></fieldDescription>
+	</field>
+	<field name="collection_way" class="java.lang.Integer">
+		<fieldDescription><![CDATA[代收-付款方式]]></fieldDescription>
+	</field>
+	<field name="bank_code" class="java.lang.String">
+		<fieldDescription><![CDATA[银行代号]]></fieldDescription>
+	</field>
+	<field name="card_no" class="java.lang.String">
+		<fieldDescription><![CDATA[银行卡号]]></fieldDescription>
+	</field>
+	<field name="so_way" class="java.lang.Integer">
+		<fieldDescription><![CDATA[收货方式]]></fieldDescription>
+	</field>
+	<field name="sps_name" class="java.lang.String"/>
+	<field name="spf_name" class="java.lang.String"/>
+	<field name="bcs_name" class="java.lang.String"/>
+	<field name="bcs_phone" class="java.lang.String"/>
+	<field name="bcf_name" class="java.lang.String"/>
+	<field name="bcf_phone" class="java.lang.String"/>
+	<title>
+		<band height="264" splitType="Stretch">
+			<staticText>
+				<reportElement x="358" y="57" width="88" height="20" uuid="df7e2636-deda-4772-8735-0c5429f983b8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[运费：]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="251" y="37" width="107" height="20" uuid="0d6d2915-8a2f-44ff-9a99-d18a0f789d84"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fa_time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="188" y="97" width="63" height="20" uuid="d400a81e-9cc6-4c72-87c2-45525172f4ac"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[收货人电话：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="37" width="88" height="20" uuid="883385f1-baab-4d7f-ba3e-a8c6c0bab377"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[收货方式：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="117" width="63" height="20" uuid="ce9432d8-147e-4889-878b-cddc6f4c3c16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[代收银行：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="77" width="63" height="20" uuid="2417a51e-22ab-4104-94fd-fd6c819a99c8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[发货人：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="251" y="57" width="107" height="20" uuid="e3b61b1c-1a8b-4f16-bedb-2a2151e36f6f"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sps_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="117" width="104" height="20" uuid="68740293-e6da-4c6a-a910-c74e9ac4747b"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{count_insurance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="37" width="104" height="20" uuid="479ff7fc-7abe-402d-9c0a-450e462a14d9"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fa_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="446" y="57" width="100" height="20" uuid="d9e054b3-4676-4b5f-b82a-9ee3b8356ab3"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{freight}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="358" y="97" width="88" height="20" uuid="6d11dd0e-600f-4de5-8a78-f5a735a33c66"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[代收费：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="251" y="77" width="107" height="20" uuid="3c64c155-20a6-49da-b685-6979a0cbc11c"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bcs_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="167" y="6" width="117" height="31" uuid="8d729c3b-6a87-4429-8a01-2e82fc82b5a2"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="微软雅黑" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[鄂西快运]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="37" width="63" height="20" uuid="589a9e35-b339-4633-a8eb-122a6b1409d3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[发货单号：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="77" width="104" height="20" uuid="b3d19b03-6a12-4010-8c02-9a62e188c57e"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bcf_name}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="21" y="157" width="525" height="107" uuid="60b074d7-f25e-40ae-924e-973639379774"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="invoice_id">
+					<subreportParameterExpression><![CDATA[$P{invoice_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "test_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="358" y="77" width="88" height="20" uuid="0509b931-c023-47e2-a953-85833fa36b39"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[运费-付款方式：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="446" y="77" width="100" height="20" uuid="56abbd15-7f0c-4901-8de2-7311eeccb57a"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{freight_way}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="137" width="63" height="20" uuid="6ede515f-a14d-47f8-8e3b-102d60e49631"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[手续费：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="137" width="104" height="20" uuid="06d4e53f-95a5-412c-a1ac-48a74c8301ec"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fee}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="188" y="137" width="63" height="20" uuid="b85e4b06-4b46-4992-ab98-b20ed6f1d070"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[银行卡号：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="446" y="97" width="100" height="20" uuid="8932df66-1a50-4f60-aba0-1c2b406f7d1f"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{collection}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="251" y="117" width="107" height="20" uuid="e27f7325-5615-4127-bad3-df1f4c1ee8e8"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bank_code}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="446" y="117" width="100" height="20" uuid="b7bbde58-5503-4e06-85bf-446031bdd2e1"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{count_insurance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="251" y="137" width="295" height="20" uuid="568e3790-1f42-45f0-ad0f-f3ca8477db53"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{card_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="446" y="37" width="100" height="20" uuid="2d197a80-d35f-4109-bd85-c38cb495af1a"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{so_way}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="358" y="117" width="88" height="20" uuid="d21dd0a6-0ff0-4875-8608-313cbe0bb11f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[代收-付款方式：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="117" width="63" height="20" uuid="0148e50f-f0ea-481e-aaa9-af9bda12bc2a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[合计保险费：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="57" width="63" height="20" uuid="8a4cb1e3-3aa5-4170-8493-cebfb65a8bf8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[收货点：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="77" width="63" height="20" uuid="9c190b0d-95b3-43f1-b781-71bf707a1fdb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[收货人：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="17" width="100" height="20" uuid="218e838a-991a-4c87-8762-68901ec2fd43"/>
+				<textElement>
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[发货单]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="57" width="104" height="20" uuid="ca8fe986-1e9f-4bc8-ab9d-da82419240bf"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{spf_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="97" width="63" height="20" uuid="862f75d4-8a26-4eb5-920b-827f8d1e20a5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[发货人电话：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="97" width="104" height="20" uuid="49c272b5-dc24-4da7-b868-97263f94c6bc"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bcf_phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="188" y="37" width="63" height="20" uuid="1c984073-6900-4822-80e0-ea0b562bff5f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[发货时间：]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="251" y="97" width="107" height="20" uuid="000997f1-c058-43f2-b38b-c8a95c719f54"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bcs_phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="57" width="63" height="20" uuid="e4188d79-161c-43e5-ac9e-0a2eebf74434"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="微软雅黑"/>
+				</textElement>
+				<text><![CDATA[发货点：]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

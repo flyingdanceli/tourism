@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="excel_clientele" language="groovy" printOrder="Horizontal" pageWidth="842" pageHeight="400" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8a21722f-469b-46fa-ba16-963587cec686">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="3"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ids" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+		fi.*,
+		sps.`name` sps_name,
+		spf.`name` spf_name,
+		bcs.`name` bcs_name,
+		bcs.phone bcs_phone,
+		bcf.`name` bcf_name,
+		bcf.phone bcf_phone
+	FROM
+		fa_invoice fi,
+		sys_point sps,
+		sys_point spf,
+		bas_clientele bcs,
+		bas_clientele bcf
+	where
+		fi.fa_point = spf.id
+		AND fi.so_point = sps.id
+		AND fi.fa_clientele = bcf.id
+		AND fi.so_clientele = bcs.id
+		and fi.collection_way = 1
+		and fi.id in ($P{ids})]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fa_no" class="java.lang.String">
+		<fieldDescription><![CDATA[发货单号]]></fieldDescription>
+	</field>
+	<field name="fa_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[发货时间]]></fieldDescription>
+	</field>
+	<field name="fa_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[发货电话]]></fieldDescription>
+	</field>
+	<field name="fa_point" class="java.lang.Long">
+		<fieldDescription><![CDATA[发货点]]></fieldDescription>
+	</field>
+	<field name="fa_clientele" class="java.lang.Long">
+		<fieldDescription><![CDATA[发货人]]></fieldDescription>
+	</field>
+	<field name="so_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[收货电话]]></fieldDescription>
+	</field>
+	<field name="so_clientele" class="java.lang.Long">
+		<fieldDescription><![CDATA[收货人]]></fieldDescription>
+	</field>
+	<field name="so_point" class="java.lang.Long">
+		<fieldDescription><![CDATA[收货点]]></fieldDescription>
+	</field>
+	<field name="freight" class="java.lang.Integer">
+		<fieldDescription><![CDATA[运费]]></fieldDescription>
+	</field>
+	<field name="collection" class="java.lang.Integer">
+		<fieldDescription><![CDATA[代收费]]></fieldDescription>
+	</field>
+	<field name="ins_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[录入时间]]></fieldDescription>
+	</field>
+	<field name="up_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[修改时间]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[状态(0.发货中；1.已经收货；2.代收支付确认；3.代收支付完成)]]></fieldDescription>
+	</field>
+	<field name="count_insurance" class="java.lang.Integer">
+		<fieldDescription><![CDATA[合计保险费]]></fieldDescription>
+	</field>
+	<field name="fee" class="java.lang.Integer">
+		<fieldDescription><![CDATA[手续费]]></fieldDescription>
+	</field>
+	<field name="freight_way" class="java.lang.Integer">
+		<fieldDescription><![CDATA[运费-付款方式]]></fieldDescription>
+	</field>
+	<field name="collection_way" class="java.lang.Integer">
+		<fieldDescription><![CDATA[代收-付款方式]]></fieldDescription>
+	</field>
+	<field name="bank_code" class="java.lang.String">
+		<fieldDescription><![CDATA[银行代号]]></fieldDescription>
+	</field>
+	<field name="card_no" class="java.lang.String">
+		<fieldDescription><![CDATA[银行卡号]]></fieldDescription>
+	</field>
+	<field name="so_way" class="java.lang.Integer">
+		<fieldDescription><![CDATA[收货方式]]></fieldDescription>
+	</field>
+	<field name="fa_name" class="java.lang.String">
+		<fieldDescription><![CDATA[发货人名称]]></fieldDescription>
+	</field>
+	<field name="so_name" class="java.lang.String">
+		<fieldDescription><![CDATA[收货人名称]]></fieldDescription>
+	</field>
+	<field name="so_point_sub_name" class="java.lang.String">
+		<fieldDescription><![CDATA[收货二级节点]]></fieldDescription>
+	</field>
+	<field name="so_point_sub_money" class="java.lang.Integer">
+		<fieldDescription><![CDATA[转运费]]></fieldDescription>
+	</field>
+	<field name="so_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[确认到货时间]]></fieldDescription>
+	</field>
+	<field name="collection_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[代收时间]]></fieldDescription>
+	</field>
+	<field name="cargo_num" class="java.lang.Integer">
+		<fieldDescription><![CDATA[件数]]></fieldDescription>
+	</field>
+	<field name="sps_name" class="java.lang.String"/>
+	<field name="spf_name" class="java.lang.String"/>
+	<field name="bcs_name" class="java.lang.String"/>
+	<field name="bcs_phone" class="java.lang.String"/>
+	<field name="bcf_name" class="java.lang.String"/>
+	<field name="bcf_phone" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="300" y="0" width="100" height="20" uuid="9434eeea-a808-482a-b542-1a8125edd4e0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[户名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="100" height="20" uuid="27ce8145-f22c-472c-9815-86e7824385d1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[银行代码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="200" y="0" width="100" height="20" uuid="33ece269-be6b-43e4-8358-7b91ac6326e8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[账号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="100" height="20" uuid="fec7dbf2-3c6e-46b0-84d9-36f7d9536e3e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[金额]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="500" y="0" width="100" height="20" uuid="a1d1e4d7-3076-41d2-8cf3-3df3a6db394a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[备注]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="91f3f1fc-0dfe-4fc2-82cc-074539505ea9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[货单号]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="300" y="0" width="100" height="20" uuid="8cf1f9c8-b3a5-4065-a18d-0c90785d2179"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fa_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="100" height="20" uuid="9b8c1705-01d2-4179-a6d7-ce5d6b4ae718"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bank_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="200" y="0" width="100" height="20" uuid="289272a0-00d4-458c-af30-10208a743944"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{card_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="100" height="20" uuid="c7714264-c02f-4614-87f8-823e64b4b747"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{collection}-($F{fee}==null?0:$F{fee})+".00"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="500" y="0" width="100" height="20" uuid="9a44c4ac-65a6-4d38-95c0-ed44feb30265"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{so_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="69826de8-1faf-49f4-bee7-616bd1d749ec"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fa_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

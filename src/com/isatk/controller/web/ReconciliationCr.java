@@ -1,0 +1,220 @@
+package com.isatk.controller.web;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.druid.pool.DruidDataSource;
+import com.isatk.controller.base.BaseController;
+import com.isatk.ge.model.bean.PageBean;
+import com.isatk.model.dto.AjaxMessage;
+import com.isatk.model.dto.BasClientele;
+import com.isatk.model.dto.FaInvoice;
+import com.isatk.model.dto.SysPoint;
+import com.isatk.service.base.BankNameService;
+import com.isatk.service.base.BasClienteleService;
+import com.isatk.service.base.FaInvoiceService;
+import com.isatk.service.base.SysPointService;
+import com.isatk.util.TimeFormatTemplate;
+@Controller
+@RequestMapping("/reconciliation")
+public class ReconciliationCr extends BaseController{
+	@Autowired
+	private FaInvoiceService faInvoiceService;
+	@Autowired
+	private SysPointService sysPointService;
+	@Autowired
+	private BankNameService bankNameService;
+	@Autowired
+	BasClienteleService clienteleService;
+	@RequestMapping("/index.html")
+	public ModelAndView mine(HttpServletRequest request,HttpServletResponse response,PageBean<FaInvoice, FaInvoice> page,FaInvoice faInvoice ,Integer timeType,Date time){
+		if(page==null){
+			page = new PageBean<FaInvoice,FaInvoice>();
+		}
+		//page.setPageSize(50);
+		ModelAndView mv=new ModelAndView("web/reconciliation/index");
+		List<SysPoint> fa = sysPointService.findList(1, 0);
+		List<SysPoint> so = sysPointService.findList(0, 1);
+		if(timeType !=null && timeType == 1){
+			faInvoice.setFaTime(time);
+		}else if(timeType !=null && timeType == 2){
+			faInvoice.setSoTime(time);
+		}else if(timeType !=null && timeType == 3){
+			faInvoice.setCollectionTime(time);
+		}
+		faInvoice.setOrderString(" ins_time desc ");
+		page.setParameterEntity(faInvoice);
+		page.setHasEnable(1);
+		page = faInvoiceService.findListData(page);
+		List<Date> dateList =  new ArrayList();
+		for(int i=0 ; i>-50; i--){
+			dateList.add(TimeFormatTemplate.getOffsetDateBegin(i));
+		}
+		FaInvoice countFi = faInvoiceService.findCountFaInvoice(faInvoice);
+		mv.addObject("countFi", countFi);
+		mv.addObject("dateList", dateList);
+		mv.addObject("page", page);
+		mv.addObject("fa", fa);
+		mv.addObject("so", so);
+		mv.addObject("timeType", timeType);
+		mv.addObject(_USER, request.getSession().getAttribute(_USER));
+		return mv;
+	}
+	
+	@RequestMapping("/exportExcel.html")
+	public ModelAndView exportExcel(HttpServletRequest request,HttpServletResponse response,Long[] id) throws SQLException{
+//		Map<String,Object> params = new HashMap();
+		String ids = "";
+		for(Long i:id){
+			ids+=i+",";
+		}
+		if(ids.length()>0){
+			ids = ids.substring(0, ids.length()-1);
+		}
+//		params.put("ids", ids);
+//		ApplicationContext ct=new ClassPathXmlApplicationContext("applicationContext.xml");
+//		DruidDataSource datasource=(DruidDataSource)ct.getBean("dataSource");
+//		Connection con=datasource.getConnection();
+		//exportExcel(request, response, con, params);
+		exportExcel(request, response,ids);
+		return null;
+	}
+	
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response,String ids){
+		ServletContext servletContext = request.getServletContext();
+        File templeFile=new File(servletContext.getRealPath("/excel/ABCTemple.xls"));
+//        String f = servletContext.getRealPath("/excel/")+"\\"+TimeFormatTemplate.getNumberDate()+".xls";
+//        File destFile = new File(f);
+//        try {
+//			FileUtils.copyFile(templeFile, destFile);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+        HSSFWorkbook workbook =null;
+        try {
+			workbook = new HSSFWorkbook(new FileInputStream(templeFile));
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			List<Map> list = faInvoiceService.findExcelDateByIds(ids);
+			for(int i=0;i< list.size();i++){
+				HSSFRow row = sheet.createRow(i+1);
+				row.createCell(0).setCellValue(String.valueOf(list.get(i).get("faNo")));
+				row.createCell(1).setCellValue(String.valueOf(list.get(i).get("bankCode")));
+				row.createCell(2).setCellValue(String.valueOf(list.get(i).get("cardNo")));
+				row.createCell(3).setCellValue(String.valueOf(list.get(i).get("faNmae")));
+				Integer collection = (Integer) (list.get(i).get("collection")==null?0:list.get(i).get("collection"));
+				Integer fee = (Integer) (list.get(i).get("fee")==null?0:list.get(i).get("fee"));
+				Double d = (double) (collection - fee);
+				row.createCell(4,Cell.CELL_TYPE_NUMERIC).setCellValue(d);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        try {
+            response.setHeader("Content-Disposition", "attachment;filename="+TimeFormatTemplate.getNumberDate()+".xls");
+            response.setContentType("application/vnd_ms-excel");
+            workbook.write(response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+            	response.getOutputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+	}
+	
+	/**
+     * 导出为excel文件
+     * @param request
+     * @param response
+     */
+    private void exportExcel(HttpServletRequest request, HttpServletResponse response,Connection conn,Map params){
+        try {
+            response.setCharacterEncoding("UTF-8");  
+            ServletContext servletContext=request.getServletContext();
+            //得到jasper文件
+            File jasperFile=new File(servletContext.getRealPath("/reports/excel_clientele2.jasper"));
+            JasperReport jasperReport =(JasperReport)JRLoader.loadObject(jasperFile);
+           
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
+            JRXlsExporter exporter=new JRXlsExporter();
+            exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, response.getOutputStream());
+            exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+            exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+        
+            response.setHeader("Content-Disposition", "attachment;filename="+TimeFormatTemplate.getThisTimeTxt()+".xls");
+            response.setContentType("application/vnd_ms-excel");
+            exporter.exportReport();
+        } catch (JRException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } 
+    }
+   
+	public List<BasClientele> findClientele(String key,Integer maxLength){
+		List<BasClientele> list = clienteleService.findRecordByKey(key);
+		return list;
+	}
+	@RequestMapping("/changeStatus.ajax")
+	@ResponseBody
+	public AjaxMessage changeStatus(HttpServletRequest request,HttpServletResponse response,Long[] id) throws SQLException{
+		String ids = "";
+		for(Long i:id){
+			FaInvoice fi = new FaInvoice();
+			fi.setId(i);
+			fi.setStatus(3);
+			faInvoiceService.updateOneRecord(fi);
+		}
+		/*if(ids.length()>0){
+			ids = ids.substring(0, ids.length()-1);
+			faInvoiceService.updateByIds(ids);
+		}*/
+		
+		AjaxMessage  am =  new AjaxMessage();
+		return am;
+	}
+}
