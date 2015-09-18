@@ -217,4 +217,11 @@ public class ReconciliationCr extends BaseController{
 		AjaxMessage  am =  new AjaxMessage();
 		return am;
 	}
+	@RequestMapping("/delete.ajax")
+	@ResponseBody
+	public AjaxMessage delete(HttpServletRequest request,HttpServletResponse response,Long id){
+		faInvoiceService.deleteOneRecord(id);
+		AjaxMessage  am =  new AjaxMessage();
+		return am;
+	}
 }

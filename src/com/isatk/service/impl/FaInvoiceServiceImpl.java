@@ -59,7 +59,7 @@ public class FaInvoiceServiceImpl implements FaInvoiceService {
 	@Override
 	public void deleteOneRecord(FaInvoice dto) throws SysException {
 		// TODO Auto-generated method stub
-		
+		deleteOneRecord(dto.getId());
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class FaInvoiceServiceImpl implements FaInvoiceService {
 	@Override
 	public void deleteOneRecord(Long dbid) throws SysException {
 		// TODO Auto-generated method stub
-		
+		faInvoiceMapper.deleteByPrimaryKey(dbid);
 	}
 
 	@Override

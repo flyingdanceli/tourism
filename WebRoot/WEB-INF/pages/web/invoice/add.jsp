@@ -29,7 +29,7 @@
         <div class="form-group">
 		    <label class="col-sm-2 control-label">发货时间</label>
 		    <div class="col-sm-4">
-		    	<input type='text' class="form-control" id='time' name="time" value="<fmt:formatDate value="${date }"  pattern="yyyy-MM-dd" />" />
+		    	<input type='text' class="form-control" id='faTime' name="faTime" value="<fmt:formatDate value="${date }"  pattern="yyyy-MM-dd" />" />
 		     	<%--<input type="date" class="form-control" placeholder="默认当天" value="<fmt:formatDate value="${date }"  pattern="yyyy-MM-dd"></fmt:formatDate>" name="faTime" required="required" /> --%>
 		    </div>
 		    <label class="col-sm-2 control-label">运单号</label>

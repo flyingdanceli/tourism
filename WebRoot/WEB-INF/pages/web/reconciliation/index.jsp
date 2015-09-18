@@ -108,6 +108,7 @@
 		   		<th>代收费/手续费</th>
 		   		<th>件数</th>
 		   		<th>状态</th>
+		   		<th>操作</th>
 		   	</tr>
 		   	</thead>
 		   	<tbody>
@@ -134,6 +135,11 @@
 			   			<c:if test="${v.status == 3 }"><span class="text-success"><i class="fa fa-circle"></i> 已完成</span></c:if>
 			   			<br>
 			   			<time class="text-muted time"><fmt:formatDate value="${v.upTime }"></fmt:formatDate></time>
+			   		</td>
+			   		<td>
+			   			<a href="javascript:void(0);" data-id="${v.id}" class="btn btn-danger btn-sm delete" >
+							      <i class="fa fa-trash-o"></i> 删除
+							</a>
 			   		</td>
 			   	</tr>
 		   	</c:forEach>
@@ -202,6 +208,16 @@ $(function(){
 			alert("执行成功！");
 			$("#pagerForm").submit();
 		});
+	});
+	$(".delete").click(function(){
+		if(confirm("确定删除该记录？")){
+			$.getJSON("${appPath }/reconciliation/delete.ajax?id="+$(this).data("id"),function(){
+				alert("删除成功！");
+				$("#pagerForm").submit();
+			});
+		}
+		
+		
 	});
 });
 </script>
