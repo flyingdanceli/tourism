@@ -48,8 +48,9 @@ public class FaInvoiceServiceImpl implements FaInvoiceService {
 	@Override
 	public PageBean<FaInvoice, FaInvoice> findListData(
 			PageBean<FaInvoice, FaInvoice> page) throws SysException {
+		page.setPage(page.createPage());
 		FaInvoice dto=page.getParameterEntity();
-		
+		dto.setPage(page.createPage());
 		page.putLastRowNum(faInvoiceMapper.countDetail(dto));
 		List<FaInvoice> list=faInvoiceMapper.selectDetail(dto);
 		page.setDataList(list);

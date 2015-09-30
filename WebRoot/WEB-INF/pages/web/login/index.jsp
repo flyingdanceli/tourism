@@ -109,10 +109,12 @@ body {
 					      <strong><i class="fa fa-exclamation-triangle"></i> ${res}</strong>
 					    </div>
 					    </c:if>
+					    
+					    
 						<div class="form-group">
 							<!-- Button -->
 							<div class="col-sm-12 controls">
-								<button type="button" class="btn btn-success pull-right" id="myButton" data-loading-text="Loading..." autocomplete="off">
+								<button type="submit" class="btn btn-success pull-right" id="myButton" data-loading-text="Loading..." autocomplete="off">
 									<i class="glyphicon glyphicon-log-in"></i> 登陆系统
 								</button>
 							</div>

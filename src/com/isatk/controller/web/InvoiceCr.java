@@ -47,6 +47,12 @@ public class InvoiceCr extends BaseController {
 	@RequestMapping("/mine.html")
 	public ModelAndView mine(HttpServletRequest request,HttpServletResponse response,PageBean<FaInvoice, FaInvoice> page,FaInvoice faInvoice ,Integer timeType,Date time){
 		SysUser su = (SysUser) request.getSession().getAttribute(_USER);
+		if("".equals(faInvoice.getSoPhone()))
+			faInvoice.setSoPhone(null);
+		if("".equals(faInvoice.getSoName()))
+			faInvoice.setSoName(null);
+		if("".equals(faInvoice.getFaNo()))
+			faInvoice.setFaNo(null);
 		/*List<SysPoint> fa = sysPointService.findList(1, 0);
 		List<SysPoint> so = sysPointService.findList(0, 1);*/
 		List<SysPoint> fa = null;
@@ -82,6 +88,8 @@ public class InvoiceCr extends BaseController {
 		if(page==null){
 			page = new PageBean<FaInvoice,FaInvoice>();
 		}
+		
+		
 		faInvoice.setOrderString(" ins_time desc ");
 		ModelAndView mv=new ModelAndView("web/invoice/mine");
 		
@@ -95,11 +103,12 @@ public class InvoiceCr extends BaseController {
 		mv.addObject("fa", fa);
 		mv.addObject("so", so);
 		mv.addObject(_USER, request.getSession().getAttribute(_USER));
+		mv.addObject("faInvoice", faInvoice);
 		return mv;
 	}
 	@RequestMapping("/add.html")
 	public ModelAndView add(HttpServletRequest request,HttpServletResponse response){
-		//System.out.println(idServiceImpl.getOrder());
+		int id = idServiceImpl.getOrder();
 		SysUser su = (SysUser) request.getSession().getAttribute(_USER);
 		ModelAndView mv=new ModelAndView("web/invoice/add");
 		//List<SysPoint> fa = sysPointService.findList(1, 0);
@@ -110,6 +119,7 @@ public class InvoiceCr extends BaseController {
 		fa.add(sp);
 		mv.addObject("fa", fa);
 		mv.addObject("so", so);
+		mv.addObject("ordId",id);
 		mv.addObject("bankNames", bankNames);
 		mv.addObject("date", new Date());
 		return mv;
@@ -123,7 +133,15 @@ public class InvoiceCr extends BaseController {
 			){
 		Date date = new Date();
 		ModelAndView mv=new ModelAndView("redirect:/invoice/mine.html");
-		long id = SNPool.createInstance().getNextID();
+		//System.out.println(idServiceImpl.getOrder());
+		//long id = SNPool.createInstance().getNextID();
+		Long id = 0L;
+		if(faInvoice.getFaNo() == null){
+			id = (long) idServiceImpl.getOrder();
+		}else{
+			id = Long.valueOf(faInvoice.getFaNo());
+		}
+			
 		
 		faInvoice.setId(id);
 		if(StringUtils.isBlank(faInvoice.getFaNo())){

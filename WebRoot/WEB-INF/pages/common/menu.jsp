@@ -45,7 +45,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user-secret"></i> ${sessionScope.user.name } <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#"><i class="fa fa-key"></i> 修改密码</a></li>
+                <li><a href="${appPath }/sysUser/toChangePassword.html"><i class="fa fa-key"></i> 修改密码</a></li>
                 <li><a href="${appPath}/">退出</a></li>
               </ul>
             </li>

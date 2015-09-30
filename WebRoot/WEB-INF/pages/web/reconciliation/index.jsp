@@ -23,12 +23,16 @@
 				<input type="hidden" name="pageNum" value="1">
 				
 			  <div class="form-group">
-			    <label>客户姓名：</label>
-			    <input type="text" class="form-control" name="clienteleName" placeholder="发货/收货人姓名" value="${param.clienteleName }">
-			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
+			    <label>单号：</label>
+			    <input type="text" class="form-control" name="faNo" placeholder="单号" value="${param.faNo }" size="12">
+			  </div>
 			  <div class="form-group">
-			    <label>电话：</label>
-			    <input type="text" class="form-control" name="clientelePhone"  placeholder="发货/收货人电话" value="${param.clientelePhone }">
+			    <label>收货人：</label>
+			    <input type="text" class="form-control" name="soName" placeholder="收货人姓名-模糊匹配" value="${param.soName }" size="17">
+			  </div>
+			  <div class="form-group">
+			    <label>收货电话：</label>
+			    <input type="text" class="form-control" name="soPhone"  placeholder="收货人电话" value="${param.soPhone }" size="12">
 			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
 			  <div class="form-group">
 			    <label>发货点</label>

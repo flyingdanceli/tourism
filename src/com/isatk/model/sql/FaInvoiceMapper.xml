@@ -717,6 +717,9 @@
       <if test="soWay != null">
         so_way = #{soWay,jdbcType=INTEGER}
       </if>
+      <if test="soName != null">
+        so_name like concat('%',#{soName,jdbcType=VARCHAR},'%')
+      </if>
       </where>
 	    <if test="page != null">
 	      limit #{page.length} offset #{page.begin}
@@ -787,6 +790,9 @@
       </if>
       <if test="soWay != null">
        and  so_way = #{soWay,jdbcType=INTEGER}
+      </if>
+      <if test="soName != null">
+       and so_name like concat('%',#{soName,jdbcType=VARCHAR},'%')
       </if>
       </where>
   </select>
@@ -897,6 +903,9 @@
       <if test="collectionTime != null">
        and TO_DAYS(collection_time) = TO_DAYS(#{collectionTime,jdbcType=TIMESTAMP})
       </if>
+      <if test="soName != null">
+       and fi.so_name like concat('%',#{soName,jdbcType=VARCHAR},'%')
+      </if>
   	</where>
   	<if test="orderString != null">
       order by ${orderString}
@@ -978,6 +987,9 @@
       </if>
       <if test="collectionTime != null">
        and TO_DAYS(collection_time) = TO_DAYS(#{collectionTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="soName != null">
+      and  fi.so_name like concat('%',#{soName,jdbcType=VARCHAR},'%')
       </if>
       </where>
   </select>
@@ -1094,6 +1106,9 @@
       </if>
       <if test="collectionTime != null">
        and TO_DAYS(collection_time) = TO_DAYS(#{collectionTime,jdbcType=TIMESTAMP})
+      </if>
+      <if test="soName != null">
+       and fi.so_name like concat('%',#{soName,jdbcType=VARCHAR},'%')
       </if>
   	</where>
   	<if test="page != null">

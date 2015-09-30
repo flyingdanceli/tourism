@@ -52,46 +52,26 @@ public class PrintCr {
 		return mv;
 	}
 	@RequestMapping("/printReport.html")
-	public String printReport(HttpServletRequest request,HttpServletResponse response,Long invoiceId) throws SQLException{
+	public String printReport(HttpServletRequest request,HttpServletResponse response,Long invoiceId,String jasper) throws SQLException{
 		System.out.println(request.getSession().getId());
-		
-		File reportFile = new File(request.getRealPath("/reports/test.jasper"));
+		if(jasper == null)
+			jasper ="test";
+		File reportFile = new File(request.getRealPath("/reports/"+jasper+".jasper"));
 		if (!reportFile.exists())
 			throw new JRRuntimeException("File WebappReport.jasper not found. The report design must be compiled first.");
-		
-		
-		List ccList = new ArrayList();
-		/*if(applyPay!=null&&appId!=null&&ytksf!=null&&appTotal!=null&&appId.length>0&&appId.length==ytksf.length&&appId.length==appTotal.length){
-			for(int i=0;appId.length>i;i++){
-				ChargeCertificate cc=new ChargeCertificate();
-				try {
-					cc.setField1(new String(className[i].getBytes("iso-8859-1"),"UTF-8").toString());
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}//new String(className[0].getBytes("iso-8859-1"),"UTF-8").toString()
-				cc.setField2(String.valueOf(ytksf[i]));
-				cc.setField3(String.valueOf(ytclf[i]));
-				cc.setField4(String.valueOf(ytqtf[i]));
-				ccList.add(cc);
-			}
-		}*/
 		Map parameters = new HashMap();
 		parameters.put("invoice_id", invoiceId);
-		
 		parameters.put("SUBREPORT_DIR", request.getRealPath("/reports")+"/");
 		JasperPrint jasperPrint = null;
 		try
 		{
 			JasperReport jasperReport = (JasperReport)JRLoader.loadObject(reportFile);
-/*			JRDataSource dataSource  = new JRBeanCollectionDataSource(ccList);
 
-			parameters.put("dataSource2", dataSource);*/
 			
 			ApplicationContext ct=new ClassPathXmlApplicationContext("applicationContext.xml");
 			DruidDataSource datasource=(DruidDataSource)ct.getBean("dataSource");
 			Connection con=datasource.getConnection();
-			/*jasperPrint = JasperFillManager.fillReport(jasperReport,parameters,new JRBeanCollectionDataSource(ccList));*/
+
 			jasperPrint = JasperFillManager.fillReport(jasperReport,parameters,con);
 			exportPrint(jasperPrint, request, response);
 		}catch (JRException e)		{
@@ -126,9 +106,11 @@ public class PrintCr {
      * @param conn
      */
 	@RequestMapping("/printPdf.html")
-    private void exportPdf(HttpServletRequest request, HttpServletResponse response,Long invoiceId) {
+    private void exportPdf(HttpServletRequest request, HttpServletResponse response,Long invoiceId,String jasper) {
+		if(jasper == null)
+			jasper ="test";
         try {
-            File jasperFile = new File(request.getServletContext().getRealPath("/reports/test.jasper"));
+            File jasperFile = new File(request.getServletContext().getRealPath("/reports/"+jasper+".jasper"));
     		if (!jasperFile.exists())
     			throw new JRRuntimeException("File WebappReport.jasper not found. The report design must be compiled first.");
             

@@ -117,23 +117,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="37" splitType="Stretch">
-			<staticText>
-				<reportElement x="216" y="5" width="117" height="31" uuid="4e7bb5df-3864-4a21-aece-984fcb3e56ac"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="宋体" size="20" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[鄂西快运]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="333" y="17" width="41" height="20" uuid="95ece4aa-b928-4904-b529-9786b01a73dc"/>
-				<textElement>
-					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[发货单]]></text>
-			</staticText>
+		<band height="40" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="17" width="104" height="20" uuid="861a792f-0bbc-4bc6-87ae-ce5eed2b7d92"/>
+				<reportElement x="423" y="4" width="104" height="20" uuid="861a792f-0bbc-4bc6-87ae-ce5eed2b7d92"/>
 				<box leftPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -141,13 +127,13 @@
 					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="12" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fa_no}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="425" y="17" width="100" height="20" uuid="1d53693b-dae1-417a-9953-be9e98f2b6c0"/>
+				<reportElement x="427" y="23" width="100" height="17" uuid="1d53693b-dae1-417a-9953-be9e98f2b6c0"/>
 				<box leftPadding="2">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -155,7 +141,7 @@
 					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fa_time}]]></textFieldExpression>
@@ -163,43 +149,15 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="227" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="20" width="63" height="20" uuid="9e5e5ea9-2068-42ed-87c9-9673c4696cee"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[收货点]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="149" y="0" width="63" height="20" uuid="c054704f-1d11-472c-8c8e-de7230afb954"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[发货人]]></text>
-			</staticText>
+		<band height="224" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="63" y="20" width="86" height="20" uuid="a5f28c62-bdfa-40a8-b5c4-eea4b0923dfc"/>
+				<reportElement x="63" y="22" width="86" height="18" uuid="a5f28c62-bdfa-40a8-b5c4-eea4b0923dfc"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
@@ -207,13 +165,13 @@
 				<textFieldExpression><![CDATA[$F{sps_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="63" y="0" width="86" height="20" uuid="62ab3780-e85e-42fd-b5c5-ff4e50314cdf"/>
+				<reportElement x="63" y="4" width="86" height="18" uuid="62ab3780-e85e-42fd-b5c5-ff4e50314cdf"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
@@ -221,13 +179,13 @@
 				<textFieldExpression><![CDATA[$F{spf_name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="212" y="20" width="125" height="20" uuid="0e44f67e-d0c4-403c-be11-703dd1921f17"/>
+				<reportElement x="218" y="22" width="125" height="18" uuid="0e44f67e-d0c4-403c-be11-703dd1921f17"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
@@ -235,13 +193,13 @@
 				<textFieldExpression><![CDATA[$F{bcs_name}+$F{bcs_phone}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="212" y="0" width="125" height="20" uuid="7655101f-6bd8-4a08-9111-ab0c9b4f4c6f"/>
+				<reportElement x="218" y="4" width="125" height="18" uuid="7655101f-6bd8-4a08-9111-ab0c9b4f4c6f"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
@@ -249,7 +207,7 @@
 				<textFieldExpression><![CDATA[$F{bcf_name}+$F{bcf_phone}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="100" width="525" height="127" uuid="1261f8d3-d83b-487f-b2ff-869ed0cb5d3c"/>
+				<reportElement x="0" y="76" width="525" height="127" uuid="1261f8d3-d83b-487f-b2ff-869ed0cb5d3c"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -260,139 +218,69 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "test_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 			<textField isBlankWhenNull="true">
-				<reportElement x="63" y="60" width="86" height="20" uuid="a376f02f-9a93-44a5-b2d0-24815017a244"/>
+				<reportElement x="63" y="58" width="86" height="18" uuid="a376f02f-9a93-44a5-b2d0-24815017a244"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{so_way}==0 ? "自提":"送货")]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="60" width="63" height="20" uuid="b3d441c4-ea86-42a6-b28e-c7fa2d2b1299"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[收货方式]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="337" y="0" width="72" height="20" uuid="3a79d43e-58c1-4a59-a4f4-839797f4a598"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[运费]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="409" y="0" width="72" height="20" uuid="660de7e8-24e4-494f-b2a7-5deb553a1eee"/>
+				<reportElement x="427" y="4" width="72" height="18" uuid="660de7e8-24e4-494f-b2a7-5deb553a1eee"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{freight}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="337" y="20" width="72" height="20" uuid="b61f1b6d-e9df-4f07-ae8f-eb4e40940fe1"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[代收费]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="409" y="20" width="72" height="20" uuid="504a6dcc-cc24-4f34-9c0b-390e58679e93"/>
+				<reportElement x="427" y="22" width="72" height="18" uuid="504a6dcc-cc24-4f34-9c0b-390e58679e93"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{collection}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="337" y="60" width="72" height="20" uuid="eecf8676-54d7-4230-9759-2b3cc2af0de5"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[保险费]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="409" y="60" width="116" height="20" uuid="3d6cb6b1-7752-4b4e-974f-590e93743c4a"/>
+				<reportElement x="427" y="58" width="116" height="18" uuid="3d6cb6b1-7752-4b4e-974f-590e93743c4a"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{count_insurance}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="337" y="40" width="72" height="20" uuid="1b82685b-110a-44ea-8b62-41dcb4581c5e"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[手续费]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="409" y="40" width="116" height="20" uuid="b0e6646c-448c-474a-b9f7-da079323b72a"/>
+				<reportElement x="427" y="40" width="116" height="18" uuid="b0e6646c-448c-474a-b9f7-da079323b72a"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
@@ -400,173 +288,75 @@
 				<textFieldExpression><![CDATA[$F{fee}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="481" y="20" width="44" height="20" uuid="342aad78-c423-441d-906b-f87a54a343d5"/>
+				<reportElement x="499" y="22" width="44" height="18" uuid="342aad78-c423-441d-906b-f87a54a343d5"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{count_insurance}==0?"现金":"银行"]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="80" width="63" height="20" uuid="53e26a94-876a-4793-8ac8-7190c2887a0f"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[代收银行]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="63" y="80" width="86" height="20" uuid="9b137125-6693-48cf-8b12-b5acbf4371b3"/>
+				<reportElement x="218" y="40" width="125" height="18" uuid="7ed3a89d-99ae-4a06-be14-8947fdb46090"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{collection_way}.equals( "0" )?"现金代收":$F{bank_code}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="149" y="40" width="63" height="20" uuid="d501f48d-a810-42c9-849d-783d55075906"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[转运费]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="212" y="40" width="125" height="20" uuid="7ed3a89d-99ae-4a06-be14-8947fdb46090"/>
-				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{so_point_sub_money}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="40" width="63" height="20" uuid="9d9cecfe-37a2-42e5-883c-764332166901"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[转运点]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="63" y="40" width="86" height="20" uuid="c61a4d97-09df-4c7d-858e-f4e440ca30f1"/>
+				<reportElement x="63" y="40" width="86" height="18" uuid="c61a4d97-09df-4c7d-858e-f4e440ca30f1"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{so_point_sub_name}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="0" width="63" height="20" uuid="58d988ec-9b97-4a15-86d7-9701ed165c32"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[发货点]]></text>
-			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="481" y="0" width="44" height="20" uuid="f765cc53-afff-4c51-af6c-d67678c06f56"/>
+				<reportElement x="499" y="4" width="44" height="18" uuid="f765cc53-afff-4c51-af6c-d67678c06f56"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{freight_way}==0?"已付":"到付"]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="149" y="20" width="63" height="20" uuid="f4b454fc-b5ed-4733-8a1b-109b4bb76b2e"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" isBold="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[收货人]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="212" y="60" width="125" height="20" uuid="28605c4f-0b52-48c4-a236-942db66451be"/>
+				<reportElement x="218" y="58" width="125" height="18" uuid="28605c4f-0b52-48c4-a236-942db66451be"/>
 				<box leftPadding="2">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="宋体" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cargo_num}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="149" y="60" width="63" height="20" uuid="dfee10eb-d373-4b26-a51d-eadc29e9c77c"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="宋体" size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[件数]]></text>
-			</staticText>
 		</band>
 	</pageHeader>
 </jasperReport>

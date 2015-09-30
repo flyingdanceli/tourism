@@ -28,14 +28,17 @@
 		<form class="form-inline" id="pagerForm" action="${appPath}/invoice/mine.html" method="post">
      	<div class="well">
 				<input type="hidden" name="pageNum" value="1">
-				
-			  <div class="form-group">
-			    <label>客户姓名：</label>
-			    <input type="text" class="form-control" name="clienteleName" placeholder="发货/收货人姓名" value="${param.clienteleName }">
+				<div class="form-group">
+			    <label>单号：</label>
+			    <input type="text" class="form-control" name="faNo" placeholder="单号" value="${param.faNo }" size="12">
 			  </div>
 			  <div class="form-group">
-			    <label>电话：</label>
-			    <input type="text" class="form-control" name="clientelePhone"  placeholder="发货/收货人电话" value="${param.clientelePhone }">
+			    <label>收货人：</label>
+			    <input type="text" class="form-control" name="soName" placeholder="收货人姓名-模糊匹配" value="${param.soName }" size="17">
+			  </div>
+			  <div class="form-group">
+			    <label>收货电话：</label>
+			    <input type="text" class="form-control" name="soPhone"  placeholder="收货人电话" value="${param.soPhone }" size="12">
 			  </div>
 			  <div class="form-group">
 			    <label>发货点</label>
@@ -54,6 +57,18 @@
 				      	<option value="${so.id }">${so.name }</option>
 				      </c:forEach>
 			      </select>
+			      &nbsp;
+			      <select class="form-control" name="soPointSubName" id="soPointSubName" data-value="${param.soPointSubName }">
+		      		<option value=""></option>
+		      		<option value="恩施">恩施</option>
+		      		<option value="利川">利川</option>
+		      		<option value="来风">来风</option>
+		      		<option value="鹤峰">鹤峰</option>
+		      		<option value="宣恩">宣恩</option>
+		      		<option value="咸丰">咸丰</option>
+		      		<option value="巴东">巴东</option>
+		      		<option value="建始">建始</option>
+		      	</select>
 			  </div>
 			  <br><br>
 			  <!-- 状态(0.发货中；1.已经收货；2.代收支付确认；3.代收支付完成) -->
@@ -77,7 +92,7 @@
 			    </select>
 			    </div>
 			    <div class='col-sm-7'>
-            		<input type='text' class="form-control" id='time' name="time" value="${param.time }" />
+            		<input type='text' class="form-control" id='time' name="time" value="${param.time }" size="11" />
         		</div>
 			   
 			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -110,7 +125,7 @@
 			   		<td ><strong class="text-primary">${v.faNo }</strong><br /><span class="text-danger"><fmt:formatDate value="${v.faTime }"></fmt:formatDate></span></td>
 			   		<td>
 			   			<strong class="text-primary">${v.sysPointF.name }</strong><br>
-			   			<strong class="text-danger">${v.sysPointS.name }</strong>
+			   			<strong class="text-danger">${v.sysPointS.name } ${v.soPointSubName }</strong>
 			   		</td>
 			   		<td>
 			   			<span class="text-primary">${v.basClienteleF.name }</span><br />
@@ -161,9 +176,23 @@
 				   			<!-- <a href="${appPath }/print/ptint.html?invoiceId=${v.id}" target="print${v.id}" class="btn btn-default" >
 							      <i class="fa fa-print"></i> 打印
 							</a> -->
-							<a href="${appPath }/print/printPdf.html?invoiceId=${v.id}" target="print${v.id}" class="btn btn-default" >
-							      <i class="fa fa-file-pdf-o"></i> PDF打印
-							</a>
+							
+						</div>
+						<!-- Split button -->
+						<div class="btn-group btn-group-sm">
+							<a href="${appPath }/print/printPdf.html?invoiceId=${v.id}"  target="print${v.id}" class="btn btn-danger" ><i class="fa fa-file-pdf-o"></i> PDF打印</a>
+						  	
+						  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu">
+						  	<li><a href="iprint://120.25.121.97:5678/print/printReport.html?invoiceId=${v.id }&view=false" ><i class="fa fa-print"></i> 直接打印</a></li>
+						  	<li><a href="iprint://120.25.121.97:5678/print/printReport.html?invoiceId=${v.id }&view=true" ><i class="fa fa-files-o"></i> 打印预览</a></li>
+						  	
+						  	<li><a href="iprint://120.25.121.97:5678/print/printReport.html?invoiceId=${v.id }&jasper=bill&view=false" ><i class="fa fa-ticket"></i> 打印标签</a></li>
+						    
+						  </ul>
 						</div>
 			   		</td>
 			   	</tr>

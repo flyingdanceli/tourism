@@ -110,10 +110,27 @@ public class SysUserCr extends BaseController{
 		mv.addObject("res","操作成功");		
 		return mv;
 	}
-	@RequestMapping("/changePassword.html")
-	public ModelAndView changePassword(String pwd,String pwd1,String pwd2){
-		ModelAndView mv = new ModelAndView("redirect:/login/doLogin.html");//成功
+	
+	@RequestMapping("/toChangePassword.html")
+	public ModelAndView toChangePassword(){
+		ModelAndView mv = new ModelAndView("web/sysuser/changepwd");//成功
 		
+		return mv;
+	}
+	@RequestMapping("/doChangePassword.html")
+	public ModelAndView doChangePassword(HttpServletRequest request,HttpServletResponse response,String pwd,String pwd1,String pwd2){
+		ModelAndView mv = new ModelAndView("web/sysuser/changepwd");//成功
+		SysUser su = (SysUser) request.getSession().getAttribute(_USER);
+		su = userMapper.selectByPrimaryKey(su.getId());
+		if(su.getPwd().equals(pwd)){
+			su.setPwd(pwd1);
+			userMapper.updateByPrimaryKeySelective(su);
+			mv.addObject("res", "密码修改成功！");
+			mv.addObject("status", "success");
+		}else{
+			mv.addObject("res", "原密码错误！");
+			mv.addObject("status", "danger");
+		}
 		return mv;
 	}
 }

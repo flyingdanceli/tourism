@@ -67,6 +67,12 @@ public class ReconciliationCr extends BaseController{
 		if(page==null){
 			page = new PageBean<FaInvoice,FaInvoice>();
 		}
+		if("".equals(faInvoice.getSoPhone()))
+			faInvoice.setSoPhone(null);
+		if("".equals(faInvoice.getSoName()))
+			faInvoice.setSoName(null);
+		if("".equals(faInvoice.getFaNo()))
+			faInvoice.setFaNo(null);
 		//page.setPageSize(50);
 		ModelAndView mv=new ModelAndView("web/reconciliation/index");
 		List<SysPoint> fa = sysPointService.findList(1, 0);
@@ -86,6 +92,7 @@ public class ReconciliationCr extends BaseController{
 		for(int i=0 ; i>-50; i--){
 			dateList.add(TimeFormatTemplate.getOffsetDateBegin(i));
 		}
+		
 		FaInvoice countFi = faInvoiceService.findCountFaInvoice(faInvoice);
 		mv.addObject("countFi", countFi);
 		mv.addObject("dateList", dateList);

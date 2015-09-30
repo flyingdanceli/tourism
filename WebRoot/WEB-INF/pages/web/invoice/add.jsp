@@ -19,7 +19,7 @@
 <body  data-menu="0">
 <jsp:include page="/WEB-INF/pages/common/menu.jsp"></jsp:include>
 <div class="container">
-<form id="mineform" class="form-horizontal" action="${appPath }/invoice/doAdd.html" method="post" autocomplete="off">
+<form id="mineform" class="form-horizontal" action="${appPath }/invoice/doAdd.html" method="post" autocomplete="off" onsubmit="return check();">
 	<ol class="breadcrumb main" >
 		  <li><a href="#"><i class="fa fa-truck"></i> 鄂西快运</a></li>
 		  <li><a href="#">发货单</a></li>
@@ -34,13 +34,13 @@
 		    </div>
 		    <label class="col-sm-2 control-label">运单号</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" placeholder="运单号，不填写可以自动生成" name="faNo">
+		      <input type="text" class="form-control" placeholder="运单号，不填写可以自动生成" name="faNo" id="faNo" value="${ordId }">
 		    </div>
 		  </div>
         <div class="form-group">
 		    <label class="col-sm-2 control-label">发货点</label>
 		    <div class="col-sm-4">
-		      <select class="form-control" name="faPoint">
+		      <select class="form-control" name="faPoint" id="faPoint" required="required">
 		      <c:forEach var="fa" items="${fa }">
 		      	<option value="${fa.id }">${fa.name }</option>
 		      </c:forEach>
@@ -48,7 +48,7 @@
 		    </div>
 		    <label class="col-sm-2 control-label">到货点</label>
 		    <div class="col-sm-4">
-		       <select class="form-control" name="soPoint" id="soPoint">
+		       <select class="form-control" name="soPoint" id="soPoint" required="required">
 		      	<c:forEach var="so" items="${so }">
 			      	<option value="${so.id }">${so.name }</option>
 			      </c:forEach>
@@ -296,7 +296,13 @@ $(function(){
 	});
 });
 
-
+function check(){
+	if($("#faTime").val() == ""){
+		alert("发货时间不能为空！");
+		return false;
+	}
+	return true;
+}
 //示例代码如下：
 
 $('#faClientele').autocomplete({
@@ -328,7 +334,7 @@ $("#goBtn").click(function(){ //获取文本框的实际值
     });
 
 $(function () {
-    $('#time').datetimepicker({
+    $('#faTime').datetimepicker({
     	format:"YYYY-MM-DD",
     	useCurrent:true,
     	locale:"zh-cn",

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bill" language="groovy" printOrder="Horizontal" pageWidth="165" pageHeight="115" columnWidth="165" leftMargin="0" rightMargin="0" topMargin="1" bottomMargin="1" uuid="2e4610fc-03de-4387-ade5-32debb769c28">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="invoice_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select fa_no,so_phone,so_name,sps.name spsname,cargo_num ,so_point_sub_name,spf.name spfname
+ from  fa_invoice fa ,temp t , sys_point sps ,sys_point spf
+ where fa.id= $P{invoice_id}
+ and cargo_num >= t.id
+ and sps.id = fa.so_point
+ and spf.id = fa.fa_point]]>
+	</queryString>
+	<field name="fa_no" class="java.lang.String">
+		<fieldDescription><![CDATA[发货单号]]></fieldDescription>
+	</field>
+	<field name="so_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[收货电话]]></fieldDescription>
+	</field>
+	<field name="so_name" class="java.lang.String">
+		<fieldDescription><![CDATA[收货人名称]]></fieldDescription>
+	</field>
+	<field name="spsname" class="java.lang.String"/>
+	<field name="cargo_num" class="java.lang.Integer">
+		<fieldDescription><![CDATA[件数]]></fieldDescription>
+	</field>
+	<field name="so_point_sub_name" class="java.lang.String">
+		<fieldDescription><![CDATA[收货二级节点]]></fieldDescription>
+	</field>
+	<field name="spfname" class="java.lang.String"/>
+	<detail>
+		<band height="113">
+			<textField>
+				<reportElement x="14" y="2" width="141" height="40" uuid="4b99a5a1-59e8-48d1-97bb-cfdd554147d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+					<font size="28" isBold="true" isUnderline="false" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{spsname}+" "+$F{so_point_sub_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="155" y="0" width="10" height="112" uuid="77ff42e6-97b0-4106-82f3-e3763c076641"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[鄂西快运]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="13" y="46" width="142" height="20" uuid="b5c9e164-a24f-45c1-8276-423f97510dcf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA["收货人："+$F{so_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="68" width="142" height="20" uuid="f146b7b7-850b-41c2-b6d2-2e67bcb3e723"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA["电话："+$F{so_phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="88" width="100" height="24" uuid="c192b221-018e-4f1f-8d76-617e13ff5d58"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fa_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="88" width="25" height="24" uuid="c716793d-d94a-443b-b882-771b427fe4b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="137" y="88" width="18" height="24" uuid="f2fe7013-3436-4826-b71b-f78aa201a9db"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="-1" width="10" height="113" uuid="ec7351e2-3246-4f1e-85e3-3ab84dd14a19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{spfname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
