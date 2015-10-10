@@ -96,6 +96,14 @@
         		</div>
 			   
 			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
+			  <div class="form-group">
+			    <label>付款方式：</label>
+			       <select class="form-control" name="freightWay" data-value="${param.freightWay }">
+			       		<option value="">全部</option>
+			      		<option value="0">己付</option>
+			      		<option value="1">到付</option>
+			      </select>
+			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
 			  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> 搜 索</button>
 			
      	</div>
@@ -136,7 +144,7 @@
 			   			<span class="text-danger">${v.basClienteleS.phone }</span>
 			   		</td>
 			   		<td>
-			   			<span class="text-primary">运：${v.freight }</span><br>
+			   			<span class="text-primary">运：${v.freight }</span>&nbsp;${v.freightWay==0?"<span class=\"label label-danger pull-right\">己付</span>":"" }<br>
 			   			<span class="text-danger">保：${v.countInsurance }</span>
 			   		</td>
 			   		<td><span class="text-primary">${v.collection }</span><br />${v.fee }</td>
@@ -151,6 +159,8 @@
 			   		</td>
 			   		<td>
 			   			<div class="btn-group btn-group-sm">
+			   			<a href="${appPath }/print/printPdf.html?invoiceId=${v.id}"  target="print${v.id}" class="btn btn-primary" ><i class="fa fa-file-pdf-o"></i> 票据</a>
+						<a href="iprint://115.28.180.62/print/printReport.html?invoiceId=${v.id }&jasper=bill&view=false" class="btn btn-danger" ><i class="fa fa-ticket"></i> 标签</a>
 				   			<c:if test="${user.soRange==v.soPoint && v.status ==0 }">
 					   			<div class="btn-group btn-group-sm" role="group">
 								    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -178,7 +188,9 @@
 							</a> -->
 							
 						</div>
-						<!-- Split button -->
+						
+						
+						<!-- Split button 
 						<div class="btn-group btn-group-sm">
 							<a href="${appPath }/print/printPdf.html?invoiceId=${v.id}"  target="print${v.id}" class="btn btn-danger" ><i class="fa fa-file-pdf-o"></i> PDF打印</a>
 						  	
@@ -187,28 +199,43 @@
 						    <span class="sr-only">Toggle Dropdown</span>
 						  </button>
 						  <ul class="dropdown-menu">
-						  	<li><a href="iprint://120.25.121.97:5678/print/printReport.html?invoiceId=${v.id }&view=false" ><i class="fa fa-print"></i> 直接打印</a></li>
-						  	<li><a href="iprint://120.25.121.97:5678/print/printReport.html?invoiceId=${v.id }&view=true" ><i class="fa fa-files-o"></i> 打印预览</a></li>
 						  	
-						  	<li><a href="iprint://120.25.121.97:5678/print/printReport.html?invoiceId=${v.id }&jasper=bill&view=false" ><i class="fa fa-ticket"></i> 打印标签</a></li>
+						  	<li><a href="iprint://115.28.180.62/print/printReport.html?invoiceId=${v.id }&view=false" ><i class="fa fa-print"></i> 直接打印</a></li>
+						  	<li><a href="iprint://115.28.180.62/print/printReport.html?invoiceId=${v.id }&view=true" ><i class="fa fa-files-o"></i> 打印预览</a></li>
+						  	
+						  	<li><a href="iprint://115.28.180.62/print/printReport.html?invoiceId=${v.id }&jasper=bill&view=false" ><i class="fa fa-ticket"></i> 打印标签</a></li>
 						    
 						  </ul>
 						</div>
+						-->
 			   		</td>
 			   	</tr>
 		   	</c:forEach>
 		   	</tbody>
 		  </table>
 		</div>
-		<div class="alert alert-info" style="font-family: Georgia ;">
-			总计：${countFi.freightWay }单，
+		<div class="alert alert-info" style2="font-family: Georgia ;">
+			<!-- 总计：${countFi.freightWay }单，
 			合计运费：${countFi.freight }，
+			已付运费：${countFi.freightWay }，
 			合计代收费：${countFi.collection }，
 			合计保险费：${countFi.countInsurance }，
 			合计手续费：${countFi.fee }，
 			合计转运费：${countFi.soPointSubMoney }，
 			货物共计：<strong>${countFi.cargoNum }</strong> 件，
+			其中代收费：<strong>${countFi.collectionWay }</strong> 单 -->
+			总计：${countFi.faPoint }单，
+			货物共计：<strong>${countFi.cargoNum }</strong> 件，
+			运费：${countFi.freight }，
+			已付运费：${countFi.freightWay }，
+			代收费：${countFi.collection }，
+			保险费：${countFi.countInsurance }，
+			手续费：${countFi.fee }，
+			转运费：${countFi.soPointSubMoney }，
 			其中代收费：<strong>${countFi.collectionWay }</strong> 单
+			
+			
+			
 		</div>
 					<div class="panelBar row" >
 				        <div class="pages col-md-3 pagination">

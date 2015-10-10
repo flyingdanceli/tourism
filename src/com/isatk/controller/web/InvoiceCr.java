@@ -133,8 +133,6 @@ public class InvoiceCr extends BaseController {
 			){
 		Date date = new Date();
 		ModelAndView mv=new ModelAndView("redirect:/invoice/mine.html");
-		//System.out.println(idServiceImpl.getOrder());
-		//long id = SNPool.createInstance().getNextID();
 		Long id = 0L;
 		if(faInvoice.getFaNo() == null){
 			id = (long) idServiceImpl.getOrder();

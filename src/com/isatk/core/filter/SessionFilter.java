@@ -36,7 +36,7 @@ public class SessionFilter extends OncePerRequestFilter {
             throws ServletException, IOException {  
   
         // 不过滤的uri  
-        String[] notFilter = new String[] { "login.html", "index.html" ,"login","print"};  
+        String[] notFilter = new String[] { "login.html","login","print"};  
   
         // 请求的uri  
         String uri = request.getRequestURI();  

@@ -78,13 +78,14 @@
 			      
 			      </select>
 			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
-			  <div class="form-group">
-			      <div class="checkbox">
-			        <label>
-			          <input name="tj" date-value="${param.tj }" value="1" type="checkbox"> 查询时统计&nbsp;&nbsp;&nbsp;
-			        </label>
-			      </div>
-			  </div>
+			   <div class="form-group">
+			    <label>付款方式：</label>
+			       <select class="form-control" name="freightWay" data-value="${param.freightWay }">
+			       		<option value="">全部</option>
+			      		<option value="0">己付</option>
+			      		<option value="1">到付</option>
+			      </select>
+			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
 			  
 			  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> 搜 索</button>
      	</div>
@@ -127,7 +128,7 @@
 			   		<td>${v.basClienteleF.name }<br />${v.basClienteleF.phone }</td>
 			   		<td>${v.basClienteleS.name }<br />${v.basClienteleS.phone }</td>
 			   		<td>
-			   			<span class="text-primary">运：${v.freight }</span><br>
+			   			<span class="text-primary">运：${v.freight }</span>&nbsp;${v.freightWay==0?"<span class=\"label label-danger\">己付</span>":"" }<br>
 			   			<span class="text-danger">保：${v.countInsurance }</span>
 			   		</td>
 			   		<td><span class="text-danger">${v.collection }</span><br />${v.fee }</td>
@@ -144,6 +145,9 @@
 			   			<a href="javascript:void(0);" data-id="${v.id}" class="btn btn-danger btn-sm delete" >
 							      <i class="fa fa-trash-o"></i> 删除
 							</a>
+						<a href="" data-id="${v.id}" class="btn btn-success btn-sm" >
+							<i class="fa fa-pencil-square-o"></i> 修改
+						</a>
 			   		</td>
 			   	</tr>
 		   	</c:forEach>
@@ -151,14 +155,15 @@
 		  </table>
 		</div>
 		</form>
-		<div class="alert alert-info" style="font-family: Georgia ;">
-			总计：${countFi.freightWay }单，
-			合计运费：${countFi.freight }，
-			合计代收费：${countFi.collection }，
-			合计保险费：${countFi.countInsurance }，
-			合计手续费：${countFi.fee }，
-			合计转运费：${countFi.soPointSubMoney }，
+		<div class="alert alert-info" style2="font-family: Georgia ;">
+			总计：${countFi.faPoint }单，
 			货物共计：<strong>${countFi.cargoNum }</strong> 件，
+			运费：${countFi.freight }，
+			已付运费：${countFi.freightWay }，
+			代收费：${countFi.collection }，
+			保险费：${countFi.countInsurance }，
+			手续费：${countFi.fee }，
+			转运费：${countFi.soPointSubMoney }，
 			其中代收费：<strong>${countFi.collectionWay }</strong> 单
 		</div>
 		<div class="panelBar row" >
@@ -220,7 +225,7 @@ $(function(){
 				$("#pagerForm").submit();
 			});
 		}
-		
+		return false;
 		
 	});
 });

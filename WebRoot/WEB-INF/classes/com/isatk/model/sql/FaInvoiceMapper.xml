@@ -1027,14 +1027,15 @@
 	</select>
 	<select id="countDetail2" parameterType="com.isatk.model.dto.FaInvoice" resultMap="BaseResultMap">
   	SELECT
-      count(*) freight_way /*行数*/,
+      count(*) fa_point /*行数*/,
       sum(freight) freight,
       sum(collection) collection,
       sum(count_insurance) count_insurance,
       sum(fee) fee,
       sum(so_point_sub_money) so_point_sub_money,
 			sum(cargo_num) cargo_num,
-      sum(if(collection=0,0,1)) collection_way/*代收件数*/
+      sum(if(collection=0,0,1)) collection_way,/*代收件数*/
+      sum(if(freight_way=0,freight,0)) freight_way
 		FROM
 			fa_invoice fi
 	<where>
@@ -1111,8 +1112,5 @@
        and fi.so_name like concat('%',#{soName,jdbcType=VARCHAR},'%')
       </if>
   	</where>
-  	<if test="page != null">
-      limit #{page.length} offset #{page.begin}
-    </if>
   </select>
 </mapper>

@@ -26,6 +26,7 @@ import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -42,8 +43,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.isatk.controller.base.BaseController;
 import com.isatk.ge.model.bean.PageBean;
+import com.isatk.ge.utils.code.SNPool;
 import com.isatk.model.dto.AjaxMessage;
 import com.isatk.model.dto.BasClientele;
+import com.isatk.model.dto.CargoDetails;
 import com.isatk.model.dto.FaInvoice;
 import com.isatk.model.dto.SysPoint;
 import com.isatk.service.base.BankNameService;
@@ -101,6 +104,80 @@ public class ReconciliationCr extends BaseController{
 		mv.addObject("so", so);
 		mv.addObject("timeType", timeType);
 		mv.addObject(_USER, request.getSession().getAttribute(_USER));
+		return mv;
+	}
+	
+	@RequestMapping("/doEdit.html")
+	public ModelAndView doEdit(HttpServletRequest request,HttpServletResponse response,FaInvoice faInvoice ,String[] name ,String[] num,Integer[] insurance,
+			String faPhone,String soPhone,
+			String faName,String soName,
+			String faBankCode,String soBankCode,
+			String faCardNo,String soCardNo
+			){
+		Date date = new Date();
+		ModelAndView mv=new ModelAndView("redirect:/invoice/mine.html");
+
+		faInvoice.setUpTime(date);
+		Integer collection = faInvoice.getCollection();
+		if(collection!=null&&collection!=0){
+			if(collection<3000){
+				faInvoice.setFee(3);
+			}else if(3000<=collection&&collection<6000){
+				faInvoice.setFee( 5 );
+			}else if(6000<=collection&&collection<10000){
+				faInvoice.setFee( 10 );
+			}else if(10000<=collection&&collection<13000){
+				faInvoice.setFee( 13 );
+			}else if(13000<=collection && collection<16000){
+				faInvoice.setFee( 16 );
+			}else if(16000<=collection && collection<20000){
+				faInvoice.setFee( 20 );
+			}else if(20000<=collection && collection<23000){
+				faInvoice.setFee(23  );
+			}else if(23000<collection && collection<26000){
+				faInvoice.setFee( 26 );
+			}else if(26000<=collection){
+				faInvoice.setFee( 30 );
+			}
+			
+		}else{
+			faInvoice.setFee(0);
+		}
+		int j =0;
+		int k = 0;
+		List<CargoDetails> cds = new ArrayList<CargoDetails>();
+		if(name != null){
+			for(int i=0;i<name.length;i++){
+				if(StringUtils.isNotBlank(name[i])){
+					CargoDetails cd = new CargoDetails();
+					cd.setId(SNPool.createInstance().getNextID());
+					cd.setName(name[i]);
+					cd.setInsurance(insurance[i]==null?0:insurance[i]);
+					cd.setNum(StringUtils.isBlank(num[i])?"1":num[i]);
+					cd.setFaId(faInvoice.getId());
+					cds.add(cd);
+					j=j+cd.getInsurance();
+					k+= Integer.valueOf(cd.getNum());
+				}
+			}
+		}
+		faInvoice.setStatus(0);
+		faInvoice.setCountInsurance(j);
+		faInvoice.setCargoNum(k);
+		faInvoice.setCargoDetailsSet(cds);
+		faInvoice.setBankCode(faBankCode);
+		faInvoice.setCardNo(faCardNo);//卡号
+		BasClientele basClienteleF = new BasClientele();
+		basClienteleF.setPhone(faPhone);
+		basClienteleF.setName(faName);
+		basClienteleF.setCardNo(faCardNo);
+		basClienteleF.setBankCode(faBankCode);
+		BasClientele basClienteleS = new BasClientele();
+		basClienteleS.setPhone(soPhone);
+		basClienteleS.setName(soName);
+		faInvoice.setBasClienteleF(basClienteleF);
+		faInvoice.setBasClienteleS(basClienteleS);
+		faInvoiceService.addOneRecord(faInvoice);
 		return mv;
 	}
 	

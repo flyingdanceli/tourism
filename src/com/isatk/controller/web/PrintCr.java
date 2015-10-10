@@ -129,7 +129,8 @@ public class PrintCr {
             response.setContentType("application/pdf");
             response.setCharacterEncoding("UTF-8");  
             exporter.exportReport();
-             
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
         } catch (Exception e) {
             e.printStackTrace();
         }
