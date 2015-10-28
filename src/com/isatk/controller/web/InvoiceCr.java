@@ -22,10 +22,12 @@ import com.isatk.model.dto.BankName;
 import com.isatk.model.dto.BasClientele;
 import com.isatk.model.dto.CargoDetails;
 import com.isatk.model.dto.FaInvoice;
+import com.isatk.model.dto.FaInvoiceDel;
 import com.isatk.model.dto.SysPoint;
 import com.isatk.model.dto.SysUser;
 import com.isatk.service.base.BankNameService;
 import com.isatk.service.base.BasClienteleService;
+import com.isatk.service.base.FaInvoiceDelService;
 import com.isatk.service.base.FaInvoiceService;
 import com.isatk.service.base.SysPointService;
 import com.isatk.service.impl.IdServiceImpl;
@@ -43,6 +45,8 @@ public class InvoiceCr extends BaseController {
 	BasClienteleService clienteleService;
 	@Autowired
 	IdServiceImpl idServiceImpl;
+	@Autowired
+	private FaInvoiceDelService faInvoiceDelService;
 	
 	@RequestMapping("/mine.html")
 	public ModelAndView mine(HttpServletRequest request,HttpServletResponse response,PageBean<FaInvoice, FaInvoice> page,FaInvoice faInvoice ,Integer timeType,Date time){
@@ -106,6 +110,8 @@ public class InvoiceCr extends BaseController {
 		mv.addObject("faInvoice", faInvoice);
 		return mv;
 	}
+	
+	
 	@RequestMapping("/add.html")
 	public ModelAndView add(HttpServletRequest request,HttpServletResponse response){
 		int id = idServiceImpl.getOrder();
@@ -256,5 +262,30 @@ public class InvoiceCr extends BaseController {
 		faInvoiceService.updateOneRecord(dto);
 		return mv;
 	}
+	@RequestMapping("/delete_list.html")
+	public ModelAndView deleteList(HttpServletRequest request,HttpServletResponse response,PageBean<FaInvoiceDel, FaInvoiceDel> page){
+		ModelAndView mv=new ModelAndView("web/invoice/delete_list");
+		page = faInvoiceDelService.findListData(page);
+		mv.addObject("page",page);
+		return mv;
+	}
 	
+	@RequestMapping("/delete.ajax")
+	@ResponseBody
+	public AjaxMessage delete(HttpServletRequest request,HttpServletResponse response,Long id){
+		SysUser su = (SysUser) request.getSession().getAttribute(_USER);
+		faInvoiceService.deleteOneRecord(id,su);
+		AjaxMessage  am =  new AjaxMessage();
+		am.setId(id);
+		return am;
+	}
+	
+	@RequestMapping("/revocation.ajax")
+	@ResponseBody
+	public AjaxMessage revocation(HttpServletRequest request,HttpServletResponse response,Long id){
+		faInvoiceService.addOneForDel(id);
+		AjaxMessage  am =  new AjaxMessage();
+		am.setId(id);
+		return am;
+	}
 }

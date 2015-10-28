@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +13,14 @@ import com.isatk.ge.model.bean.PageBean;
 import com.isatk.ge.utils.code.SNPool;
 import com.isatk.model.dao.BasClienteleMapper;
 import com.isatk.model.dao.CargoDetailsMapper;
+import com.isatk.model.dao.FaInvoiceDelMapper;
 import com.isatk.model.dao.FaInvoiceMapper;
 import com.isatk.model.dto.BasClientele;
 import com.isatk.model.dto.CargoDetails;
 import com.isatk.model.dto.FaInvoice;
+import com.isatk.model.dto.FaInvoiceDel;
 import com.isatk.model.dto.FaInvoiceExample;
+import com.isatk.model.dto.SysUser;
 import com.isatk.service.base.BasClienteleService;
 import com.isatk.service.base.FaInvoiceService;
 @Component
@@ -29,6 +33,8 @@ public class FaInvoiceServiceImpl implements FaInvoiceService {
 	private BasClienteleMapper basClienteleMapper;
 	@Autowired
 	private BasClienteleService basClienteleService;
+	@Autowired
+	private FaInvoiceDelMapper faInvoiceDelMapper;
 	@Override
 	public FaInvoice findOneRecord(String dbid) throws SysException {
 		// TODO Auto-generated method stub
@@ -59,7 +65,6 @@ public class FaInvoiceServiceImpl implements FaInvoiceService {
 
 	@Override
 	public void deleteOneRecord(FaInvoice dto) throws SysException {
-		// TODO Auto-generated method stub
 		deleteOneRecord(dto.getId());
 	}
 
@@ -70,9 +75,27 @@ public class FaInvoiceServiceImpl implements FaInvoiceService {
 	}
 
 	@Override
-	public void deleteOneRecord(Long dbid) throws SysException {
-		// TODO Auto-generated method stub
+	public void deleteOneRecord(Long dbid,SysUser su) throws SysException {
+		FaInvoice fi = faInvoiceMapper.selectByPrimaryKey(dbid);
+		FaInvoiceDel fid= new FaInvoiceDel();
+		BeanUtils.copyProperties(fi, fid);
+		fid.setDelDate(new Date());
+		fid.setDelUserId(su.getId());
+		fid.setDelUserName(su.getName());
+		faInvoiceDelMapper.insert(fid);
 		faInvoiceMapper.deleteByPrimaryKey(dbid);
+	}
+	@Override
+	public void deleteOneRecord(Long dbid) throws SysException {
+		faInvoiceMapper.deleteByPrimaryKey(dbid);
+	}
+	@Override
+	public void addOneForDel(Long dbid) throws SysException {
+		FaInvoiceDel fid = faInvoiceDelMapper.selectByPrimaryKey(dbid);
+		FaInvoice fi = new FaInvoice();
+		BeanUtils.copyProperties(fid, fi);
+		faInvoiceMapper.insert(fi);
+		faInvoiceDelMapper.deleteByPrimaryKey(dbid);
 	}
 
 	@Override
@@ -150,4 +173,6 @@ public class FaInvoiceServiceImpl implements FaInvoiceService {
 	public FaInvoice findCountFaInvoice(FaInvoice fa){
 		return faInvoiceMapper.countDetail2(fa);
 	}
+
+	
 }

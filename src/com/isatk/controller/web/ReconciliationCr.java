@@ -49,6 +49,7 @@ import com.isatk.model.dto.BasClientele;
 import com.isatk.model.dto.CargoDetails;
 import com.isatk.model.dto.FaInvoice;
 import com.isatk.model.dto.SysPoint;
+import com.isatk.model.dto.SysUser;
 import com.isatk.service.base.BankNameService;
 import com.isatk.service.base.BasClienteleService;
 import com.isatk.service.base.FaInvoiceService;
@@ -304,8 +305,10 @@ public class ReconciliationCr extends BaseController{
 	@RequestMapping("/delete.ajax")
 	@ResponseBody
 	public AjaxMessage delete(HttpServletRequest request,HttpServletResponse response,Long id){
-		faInvoiceService.deleteOneRecord(id);
+		SysUser su = (SysUser) request.getSession().getAttribute(_USER);
+		faInvoiceService.deleteOneRecord(id,su);
 		AjaxMessage  am =  new AjaxMessage();
+		am.setId(id);
 		return am;
 	}
 }

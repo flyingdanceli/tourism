@@ -118,7 +118,7 @@
 		   	</thead>
 		   	<tbody>
 		   	<c:forEach items="${page.dataList}" var="v" varStatus="s">
-			   	<tr>
+			   	<tr id="tr${v.id }">
 			   		<td class="checktd"><input type="checkbox" name="id" value="${v.id }"></td>
 			   		<td ><strong class="text-primary">${v.faNo }</strong><br /><span class="text-danger"><fmt:formatDate value="${v.faTime }"></fmt:formatDate></span></td>
 			   		<td>
@@ -220,9 +220,10 @@ $(function(){
 	});
 	$(".delete").click(function(){
 		if(confirm("确定删除该记录？")){
-			$.getJSON("${appPath }/reconciliation/delete.ajax?id="+$(this).data("id"),function(){
+			$.getJSON("${appPath }/reconciliation/delete.ajax?id="+$(this).data("id"),function(json){
 				alert("删除成功！");
-				$("#pagerForm").submit();
+				$("#tr"+json.id).remove();
+				//$("#pagerForm").submit();
 			});
 		}
 		return false;

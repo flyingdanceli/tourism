@@ -14,7 +14,6 @@
 <script type="text/javascript" src="${appPath }/resources/moment/moment.min.js"></script>
 <script type="text/javascript" src="${appPath }/resources/moment/zh-cn.js"></script>
 <script type="text/javascript" src="${appPath }/resources/bootstrap-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js"></script>
-
 </head>
 <body data-menu="0">
 <jsp:include page="/WEB-INF/pages/common/menu.jsp"></jsp:include>
@@ -124,12 +123,12 @@
 		   		<th>件数</th>
 		   		<th>状态</th>
 		   		
-		   		<th>操作</th>
+		   		<th width="200px" style="width:200px;">操作</th>
 		   	</tr>
 		   	</thead>
 		   	<tbody>
 		   	<c:forEach items="${page.dataList}" var="v" varStatus="s">
-			   	<tr>
+			   	<tr id="tr${v.id }">
 			   		<td ><strong class="text-primary">${v.faNo }</strong><br /><span class="text-danger"><fmt:formatDate value="${v.faTime }"></fmt:formatDate></span></td>
 			   		<td>
 			   			<strong class="text-primary">${v.sysPointF.name }</strong><br>
@@ -158,9 +157,15 @@
 			   			<time class="text-muted time"><fmt:formatDate value="${v.upTime }"></fmt:formatDate></time>
 			   		</td>
 			   		<td>
-			   			<div class="btn-group btn-group-sm">
-			   			<a href="${appPath }/print/printPdf.html?invoiceId=${v.id}"  target="print${v.id}" class="btn btn-primary" ><i class="fa fa-file-pdf-o"></i> 票据</a>
-						<a href="iprint://115.28.180.62/print/printReport.html?invoiceId=${v.id }&jasper=bill&view=false" class="btn btn-danger" ><i class="fa fa-ticket"></i> 标签</a>
+			   			<div class="btn-group btn-group-sm" style="width:200px;">
+				   			<a href="${appPath }/print/printPdf.html?invoiceId=${v.id}"  target="print${v.id}" class="btn btn-info" ><i class="fa fa-file-pdf-o"></i> 票据</a>
+							<a href="iprint://115.28.180.62/print/printReport.html?invoiceId=${v.id }&jasper=bill&view=false" class="btn btn-info" ><i class="fa fa-ticket"></i> 标签</a>
+						
+							<c:if test="${user.faRange==v.faPoint  && v.status ==0}">
+								<a href="javascript:void(0);" data-id="${v.id}" class="btn btn-danger btn-xs delete" >
+							      <i class="fa fa-trash-o"></i> 删除
+								</a>
+							</c:if>
 				   			<c:if test="${user.soRange==v.soPoint && v.status ==0 }">
 					   			<div class="btn-group btn-group-sm" role="group">
 								    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -282,6 +287,17 @@
          	    nextCentury: 'Next Century'
          	}
          });
+         $(".delete").click(function(){
+     		if(confirm("确定删除该记录？")){
+     			$.getJSON("${appPath }/invoice/delete.ajax?id="+$(this).data("id"),function(json){
+     				alert("删除成功！");
+     				$("#tr"+json.id).remove();
+     				//$("#pagerForm").submit();
+     			});
+     		}
+     		return false;
+     		
+     	});
      });
  </script>
 </body>
