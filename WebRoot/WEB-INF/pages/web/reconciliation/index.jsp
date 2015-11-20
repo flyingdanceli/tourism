@@ -223,7 +223,6 @@ $(function(){
 	$("#pagesubmit").click(function(){
 		$("#pagerForm").prop("action","${appPath }/reconciliation/index.html").submit();
 	});
-	exportAllExcel
 	$("#qrzf").click(function(){
 		var fields = $("#datalist td input:checked").serializeArray();
 		$.getJSON("${appPath }/reconciliation/changeStatus.ajax",fields,function(){
