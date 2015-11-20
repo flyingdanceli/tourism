@@ -93,7 +93,7 @@ public class ReconciliationCr extends BaseController{
 		page.setHasEnable(1);
 		page = faInvoiceService.findListData(page);
 		List<Date> dateList =  new ArrayList();
-		for(int i=0 ; i>-50; i--){
+		for(int i=0 ; i>-120; i--){
 			dateList.add(TimeFormatTemplate.getOffsetDateBegin(i));
 		}
 		
@@ -204,14 +204,6 @@ public class ReconciliationCr extends BaseController{
 	public void exportExcel(HttpServletRequest request, HttpServletResponse response,String ids){
 		ServletContext servletContext = request.getServletContext();
         File templeFile=new File(servletContext.getRealPath("/excel/ABCTemple.xls"));
-//        String f = servletContext.getRealPath("/excel/")+"\\"+TimeFormatTemplate.getNumberDate()+".xls";
-//        File destFile = new File(f);
-//        try {
-//			FileUtils.copyFile(templeFile, destFile);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
         HSSFWorkbook workbook =null;
         try {
 			workbook = new HSSFWorkbook(new FileInputStream(templeFile));
@@ -249,7 +241,74 @@ public class ReconciliationCr extends BaseController{
             }
         }
 	}
-	
+	@RequestMapping("/exportAllExcel.html")
+	public ModelAndView exportAllExcel(HttpServletRequest request,HttpServletResponse response,PageBean<FaInvoice, FaInvoice> page,FaInvoice faInvoice ,Integer timeType,Date time){
+		if(page==null){
+			page = new PageBean<FaInvoice,FaInvoice>();
+		}
+		if("".equals(faInvoice.getSoPhone()))
+			faInvoice.setSoPhone(null);
+		if("".equals(faInvoice.getSoName()))
+			faInvoice.setSoName(null);
+		if("".equals(faInvoice.getFaNo()))
+			faInvoice.setFaNo(null);
+		page.setPageSize(99999999);
+		if(timeType !=null && timeType == 1){
+			faInvoice.setFaTime(time);
+		}else if(timeType !=null && timeType == 2){
+			faInvoice.setSoTime(time);
+		}else if(timeType !=null && timeType == 3){
+			faInvoice.setCollectionTime(time);
+		}
+		faInvoice.setOrderString(" ins_time desc ");
+		page.setParameterEntity(faInvoice);
+		page.setHasEnable(1);
+		page = faInvoiceService.findListData(page);
+		ServletContext servletContext = request.getServletContext();
+        File templeFile=new File(servletContext.getRealPath("/excel/ABCTemple.xls"));
+        HSSFWorkbook workbook =null;
+        try {
+			workbook = new HSSFWorkbook(new FileInputStream(templeFile));
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			List<FaInvoice> list = page.getDataList();
+			int r=1;
+			for(int i=0;i< list.size();i++){
+				Integer collection = (Integer) (list.get(i).getCollection()==null?0:list.get(i).getCollection());
+				Integer fee = (Integer) (list.get(i).getFee()==null?0:list.get(i).getFee());
+				Double d = (double) (collection - fee);
+				if(d==0d || list.get(i).getBankCode()==null || list.get(i).getBankCode().equals("")){
+					continue;
+				}
+				HSSFRow row = sheet.createRow(r);
+				row.createCell(0).setCellValue(String.valueOf(list.get(i).getFaNo()));
+				row.createCell(1).setCellValue(String.valueOf(list.get(i).getBankCode()));
+				row.createCell(2).setCellValue(String.valueOf(list.get(i).getCardNo()));
+				row.createCell(3).setCellValue(String.valueOf(list.get(i).getFaName()));
+				row.createCell(4,Cell.CELL_TYPE_NUMERIC).setCellValue(d);
+				r++;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        try {
+            response.setHeader("Content-Disposition", "attachment;filename="+TimeFormatTemplate.getNumberDate()+".xls");
+            response.setContentType("application/vnd_ms-excel");
+            workbook.write(response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+            	response.getOutputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+	}
 	/**
      * 导出为excel文件
      * @param request

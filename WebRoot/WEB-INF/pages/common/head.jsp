@@ -10,6 +10,13 @@
  --%>
 <link href="${appPath }/resources/style.css" rel="stylesheet">
 <link href="${appPath }/resources/fontawes/css/font-awesome.min.css" rel="stylesheet" media="screen" />
+<style type="text/css">
+body{
+	/*background: url("/resources/other/images/bg3.jpg") no-repeat bottom right;*/
+	background-color: #F0F4E5;
+	
+}
+</style>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

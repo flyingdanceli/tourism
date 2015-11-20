@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>鄂西快运</title>
 <jsp:include page="/WEB-INF/pages/common/head.jsp"></jsp:include>
+
 </head>
 <body data-menu="1">
 <jsp:include page="/WEB-INF/pages/common/menu.jsp"></jsp:include>
@@ -87,7 +88,7 @@
 			      </select>
 			  </div>&nbsp;&nbsp;&nbsp;&nbsp;
 			  
-			  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> 搜 索</button>
+			  <button type="button" class="btn btn-default" id="pagesubmit"><i class="fa fa-search"></i> 搜 索</button>
      	</div>
      	</form>
      	<form action="${appPath }/reconciliation/exportExcel.html" method="post" id="listform">
@@ -95,6 +96,7 @@
 		  <!-- Default panel contents -->
 		  <div class="panel-heading"><i class="fa fa-th-list"></i> 发货单 
 		  	<div class="pull-right">
+		  		<button type="button" id="dcgx_all" class="btn btn-success btn-xs"><i class="fa fa-file-excel-o"></i> 导出全部</button>
 		  		<button type="button" id="dcgx" class="btn btn-success btn-xs"><i class="fa fa-file-excel-o"></i> 导出勾选</button>
 		  		<button type="button" id="qrzf"  class="btn btn-danger btn-xs"><i class="fa fa-circle-o"></i> 确认代收已支付</button>
 		  	</div>
@@ -209,8 +211,19 @@ $(function(){
 		_checkbox.prop("checked",!_checkbox.prop("checked"));
 	});
 	$("#dcgx").click(function(){
-		$("#listform").prop("action","${appPath }/reconciliation/exportExcel.html").submit();D
+		$("#listform").prop("action","${appPath }/reconciliation/exportExcel.html").submit();
 	});
+	$("#dcgx_all").click(function(){
+		if("${page.lastRowNum}" > 10000){
+			alert("导出数据过多，请导出10000条以内数据！");
+			return ;
+		}
+		$("#pagerForm").prop("action","${appPath }/reconciliation/exportAllExcel.html").submit();
+	});
+	$("#pagesubmit").click(function(){
+		$("#pagerForm").prop("action","${appPath }/reconciliation/index.html").submit();
+	});
+	exportAllExcel
 	$("#qrzf").click(function(){
 		var fields = $("#datalist td input:checked").serializeArray();
 		$.getJSON("${appPath }/reconciliation/changeStatus.ajax",fields,function(){
