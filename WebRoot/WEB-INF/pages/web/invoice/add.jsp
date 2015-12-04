@@ -90,6 +90,7 @@
 		      		<option value="咸丰">咸丰</option>
 		      		<option value="巴东">巴东</option>
 		      		<option value="建始">建始</option>
+		      		<option value="野三关">野三关</option>
 		      	</select>
 		    </div>
 		    <label class="col-sm-2 control-label"><i class="fa fa-asterisk text-danger"></i> 转运费</label>
@@ -299,6 +300,10 @@ $(function(){
 function check(){
 	if($("#faTime").val() == ""){
 		alert("发货时间不能为空！");
+		return false;
+	}
+	if($("[name=collection]").val()>0 && $("[name=collectionWay]:checked").size()==0){
+		alert("有代收金额时，必须选择代收方式");
 		return false;
 	}
 	return true;

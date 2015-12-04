@@ -351,6 +351,7 @@ public class ReconciliationCr extends BaseController{
 			FaInvoice fi = new FaInvoice();
 			fi.setId(i);
 			fi.setStatus(3);
+			fi.setUpTime(new Date());
 			faInvoiceService.updateOneRecord(fi);
 		}
 		/*if(ids.length()>0){

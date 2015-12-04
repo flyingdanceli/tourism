@@ -67,6 +67,7 @@
 		      		<option value="咸丰">咸丰</option>
 		      		<option value="巴东">巴东</option>
 		      		<option value="建始">建始</option>
+		      		<option value="野三关">野三关</option>
 		      	</select>
 			  </div>
 			  <br><br>
